@@ -32,4 +32,8 @@ def filt():
     filter = request.args.get("q")
     feed_json["entries"] = filter_feed(feed_json["entries"], filter)
 
-    return feed_json
+    feed = setup_feed(feed_json)
+    xml = gen_feed(feed, feed_json)
+
+    # TODO auto-set mimetype based on requested type
+    return Response(xml, mimetype="text/xml")
